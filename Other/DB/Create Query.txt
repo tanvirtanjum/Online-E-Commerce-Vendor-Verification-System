@@ -1,0 +1,107 @@
+CREATE TABLE roles(
+    id int AUTO_INCREMENT,
+    role_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE access(
+    id int AUTO_INCREMENT,
+    access_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE terms(
+    id int AUTO_INCREMENT,
+    term_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE groups(
+    id int AUTO_INCREMENT,
+    group_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE wings(
+    id int AUTO_INCREMENT,
+    wing_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE classes(
+    id int AUTO_INCREMENT,
+    class_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE employment_status(
+    id int AUTO_INCREMENT,
+    status_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE student_status(
+    id int AUTO_INCREMENT,
+    status_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE session_status(
+    id int AUTO_INCREMENT,
+    status_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE remarks(
+    id int AUTO_INCREMENT,
+    remark_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE designations(
+    id int AUTO_INCREMENT,
+    designation_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE notices(
+    id int AUTO_INCREMENT,
+    subject varchar(255) NOT NULL,
+    content longtext NOT NULL,
+    created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE admission_notices(
+    id int AUTO_INCREMENT,
+    title varchar(255) NOT NULL,
+    details longtext NOT NULL,
+    dead_line date NOT NULL,
+    created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+
+CREATE TABLE subjects(
+    id int AUTO_INCREMENT,
+    subject_code varchar(255) NOT NULL UNIQUE,
+    subject_name varchar(255) NOT NULL UNIQUE,
+    group_id int NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (group_id) REFERENCES groups(id)
+);
+
+CREATE TABLE logins (
+    id int AUTO_INCREMENT,
+    email varchar(255) NOT NULL UNIQUE,
+    password varchar(255) NOT NULL,
+    role_id int NOT NULL,
+    access_id int NOT NULL,
+    created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (role_id) REFERENCES roles(id),
+    FOREIGN KEY (access_id) REFERENCES access(id)
+);
