@@ -10,93 +10,24 @@ CREATE TABLE access(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE terms(
+CREATE TABLE business_types(
     id int AUTO_INCREMENT,
-    term_name varchar(255) NOT NULL UNIQUE,
+    type_name varchar(255) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE groups(
-    id int AUTO_INCREMENT,
-    group_name varchar(255) NOT NULL UNIQUE,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE wings(
-    id int AUTO_INCREMENT,
-    wing_name varchar(255) NOT NULL UNIQUE,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE classes(
-    id int AUTO_INCREMENT,
-    class_name varchar(255) NOT NULL UNIQUE,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE employment_status(
+CREATE TABLE verification_status(
     id int AUTO_INCREMENT,
     status_name varchar(255) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE student_status(
-    id int AUTO_INCREMENT,
-    status_name varchar(255) NOT NULL UNIQUE,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE session_status(
-    id int AUTO_INCREMENT,
-    status_name varchar(255) NOT NULL UNIQUE,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE remarks(
-    id int AUTO_INCREMENT,
-    remark_name varchar(255) NOT NULL UNIQUE,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE designations(
-    id int AUTO_INCREMENT,
-    designation_name varchar(255) NOT NULL UNIQUE,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE notices(
-    id int AUTO_INCREMENT,
-    subject varchar(255) NOT NULL,
-    content longtext NOT NULL,
-    created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE admission_notices(
-    id int AUTO_INCREMENT,
-    title varchar(255) NOT NULL,
-    details longtext NOT NULL,
-    dead_line date NOT NULL,
-    created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
-);
-
-
-CREATE TABLE subjects(
-    id int AUTO_INCREMENT,
-    subject_code varchar(255) NOT NULL UNIQUE,
-    subject_name varchar(255) NOT NULL UNIQUE,
-    group_id int NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (group_id) REFERENCES groups(id)
-);
 
 CREATE TABLE logins (
     id int AUTO_INCREMENT,
     email varchar(255) NOT NULL UNIQUE,
     password varchar(255) NOT NULL,
+    img_path varchar(255),
     role_id int NOT NULL,
     access_id int NOT NULL,
     created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -105,3 +36,91 @@ CREATE TABLE logins (
     FOREIGN KEY (role_id) REFERENCES roles(id),
     FOREIGN KEY (access_id) REFERENCES access(id)
 );
+
+CREATE TABLE emergency_support_officers (
+    id int AUTO_INCREMENT,
+    name varchar(255) NULL,
+    nid_no varchar(255) NOT NULL UNIQUE,
+    gender varchar(255) NOT NULL,
+    dob varchar(255) NOT NULL,
+    bg varchar(255) NOT NULL,
+    contact_no varchar(255) NOT NULL UNIQUE,
+    login_id int NOT NULL,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (login_id) REFERENCES logins(id)
+);
+
+CREATE TABLE consumers (
+    id int AUTO_INCREMENT,
+    name varchar(255) NULL,
+    nid_no varchar(255) NULL UNIQUE,
+    passport_no varchar(255) NULL UNIQUE,
+    gender varchar(255) NOT NULL,
+    dob varchar(255) NOT NULL,
+    bg varchar(255) NOT NULL,
+    contact_no varchar(255) NOT NULL UNIQUE,
+    login_id int NOT NULL,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (login_id) REFERENCES logins(id)
+);
+
+CREATE TABLE polices (
+    id int AUTO_INCREMENT,
+    name varchar(255) NULL,
+    nid_no varchar(255) NOT NULL UNIQUE,
+    employee_no varchar(255) NOT NULL UNIQUE,
+    gender varchar(255) NOT NULL,
+    dob varchar(255) NOT NULL,
+    bg varchar(255) NOT NULL,
+    contact_no varchar(255) NOT NULL UNIQUE,
+    login_id int NOT NULL,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (login_id) REFERENCES logins(id)
+);
+
+CREATE TABLE chats (
+    id int AUTO_INCREMENT,
+    text varchar(255) NOT NULL,
+    consumer_id int NOT NULL,
+    eso_id int NULL,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (consumer_id) REFERENCES consumers(id),
+    FOREIGN KEY (eso_id) REFERENCES emergency_support_officers(id)
+);
+
+CREATE TABLE businesses (
+    id int AUTO_INCREMENT,
+    credential varchar(255) NOT NULL UNIQUE,
+    name varchar(255) NOT NULL,
+    address longtext NOT NULL,
+    emergency_contact varchar(255) NOT NULL,
+    verification_count int NOT NULL,
+    owner_id int NOT NULL,
+    type_id int NULL,
+    verification_status_id int NOT NULL,
+    verification_officer_id int NULL,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (owner_id) REFERENCES consumers(id),
+    FOREIGN KEY (type_id) REFERENCES business_types(id),
+    FOREIGN KEY (verification_status_id) REFERENCES verification_status(id),
+    FOREIGN KEY (verification_officer_id) REFERENCES polices(id)
+);
+
+CREATE TABLE documents (
+    id int AUTO_INCREMENT,
+    path varchar(255) NOT NULL,
+    business_id int NOT NULL,
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (business_id) REFERENCES businesses(id)
+);
+
+INSERT INTO `access` (`id`, `access_name`) VALUES (NULL, 'PENDING'), (NULL, 'BLOCKED'), (NULL, 'ACTIVE');
+INSERT INTO `verification_status` (`id`, `status_name`) VALUES (NULL, 'Pending'), (NULL, 'Assigned'), (NULL, 'Verified'), (NULL, 'Rejected');
+INSERT INTO `business_types` (`id`, `type_name`) VALUES (NULL, 'Fashion House'), (NULL, 'Toy Shop'), (NULL, 'Baby and Mother’s Product'), (NULL, 'Stationary Shop'), (NULL, ' Fast Food Shop'), (NULL, 'Cosmetic Shop'), (NULL, 'Mobile Sales Repair'), (NULL, 'Other');
+INSERT INTO `roles` (`id`, `role_name`) VALUES (NULL, 'Support'), (NULL, 'Police'), (NULL, 'Consumer');

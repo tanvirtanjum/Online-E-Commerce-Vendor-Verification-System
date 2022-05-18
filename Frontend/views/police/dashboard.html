@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLICE | OEVVS</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/images/logo/logo.svg">
+    
+
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/all.css" rel="stylesheet">
+    <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/jQuery/jQuery_3.6.0.js"></script>
+    <script src="../../assets/crypto.js/crypto.js"></script>
+    
+    <!-- URL Controller -->
+    <script type="text/javascript" src="../../controllers/urlController.js"></script>
+
+    <!-- Page Controller -->
+    <script type="text/javascript" src="../../controllers/police/dashboardController.js"></script>
+</head>
+<body>
+    <header id="navbar"></header>
+
+    <main class="container-fluide" style="min-height: 67vh;">
+       <div class="container-fluid">
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card text-white bg-dark mb-3">
+                    <div class="card-header">Vendor</div>
+                    <div class="card-body text-center">
+                      <h1 class="card-title text-warning"><i class="fa-solid fa-users fa-2x"></i></h1>
+                      <h5>
+                        Active: <span>0</span>
+                        <br>
+                        Registration Pending: <span>0</span>
+                      </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-header">Police</div>
+                    <div class="card-body text-center">
+                      <h1 class="card-title text-warning"><i class="fa-solid fa-person-military-rifle fa-2x"></i></h1>
+                      <h5>
+                        Active: <span>0</span>
+                        <br>
+                        Restricted: <span>0</span>
+                      </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-dark bg-light mb-3">
+                    <div class="card-header">Emergency Support Officer</div>
+                    <div class="card-body text-center">
+                      <h1 class="card-title text-warning"><i class="fa-solid fa-street-view fa-2x"></i></h1>
+                      <h5>
+                          Active: <span>0</span>
+                          <br>
+                          Restricted: <span>0</span>
+                      </h5>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+
+       </div>
+    </main>
+
+    <footer id="footer"></footer>
+</body>
+</html>
