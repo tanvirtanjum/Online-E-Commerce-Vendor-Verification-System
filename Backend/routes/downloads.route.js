@@ -1,10 +1,10 @@
-const downloadsController = require("../controllers/downloads.controller");
+const downloads = require("../controllers/downloads.controller");
 // const auth = require("../middleware/authenticate.middleware");
 
 var express = require("express");
 
 var router = express.Router();
 
-router.get("", downloadsController.downloadFile);
+router.get("", downloads.downloadFile);
 
 module.exports = router;
