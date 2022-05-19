@@ -84,7 +84,7 @@ $(document).ready(function () {
     }*/
 
     $("#logoutTab").click(function () {
-        // userLogout();
+        localStorage.clear();
         window.location.href = base_URL+"/views/public/home.html";
     });
 });

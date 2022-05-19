@@ -44,5 +44,5 @@ app.use('/api/verification_status', verification_status);
 
 // <-- -->
 app.listen(process.env.SERVER_PORT_NO, () => {
-  console.log("Server Started at Port: "+process.env.SERVER_PORT_NO);
+  console.log("Server Started at Port: http://localhost:" + process.env.SERVER_PORT_NO);
 });
