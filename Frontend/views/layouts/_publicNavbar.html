@@ -43,38 +43,42 @@
         </div>
         <div class="modal-body">
           <div class="form-floating mb-2">
-            <input type="text" class="form-control" id="floatingInput" placeholder="XXX XXXX">
-            <label for="floatingInput"><i class="fa-solid fa-user"></i> Name</label>
+            <input type="text" class="form-control" id="signup_name" placeholder="XXX XXXX">
+            <label for="signup_name"><i class="fa-solid fa-user"></i> Name</label>
           </div>
           <div class="form-floating mb-2">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput"><i class="fa-solid fa-at"></i> Email address</label>
+            <input type="email" class="form-control" id="signup_email" placeholder="name@example.com">
+            <label for="signup_email"><i class="fa-solid fa-at"></i> Email address</label>
           </div>
           <div class="form-floating mb-2">
-            <input type="text" class="form-control" id="floatingInput" placeholder="30XX67XXXX">
-            <label for="floatingInput"><i class="fa-solid fa-address-card"></i> National Identity No.</label>
+            <input type="number" class="form-control" id="signup_contact" placeholder="name@example.com">
+            <label for="signup_contact"><i class="fa-solid fa-phone"></i> Mobile No. (+880-XXXXXXXXXX)</label>
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="signup_nid" placeholder="30XX67XXXX">
+            <label for="signup_nid"><i class="fa-solid fa-address-card"></i> National Identity No.</label>
           </div>
           <div class="mb-2 text-center">
             -OR-
           </div>
           <div class="form-floating mb-2">
-            <input type="text" class="form-control" id="floatingInput" placeholder="30XX67XXXX">
-            <label for="floatingInput"><i class="fa-solid fa-passport"></i> Passport No.</label>
+            <input type="text" class="form-control" id="signup_passport" placeholder="30XX67XXXX">
+            <label for="signup_passport"><i class="fa-solid fa-passport"></i> Passport No.</label>
           </div>
           <div class="form-floating mb-2">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <select class="form-select" id="signup_gender" aria-label="Floating label select example">
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
-            <label for="floatingSelect"><i class="fa-solid fa-mars-and-venus"></i> Gender</label>
+            <label for="signup_gender"><i class="fa-solid fa-mars-and-venus"></i> Gender</label>
           </div>
           <div class="form-floating mb-2">
-            <input type="date" class="form-control" id="floatingInput">
-            <label for="floatingInput"><i class="fa-solid fa-calendar-days"></i> Date of Birth</label>
+            <input type="date" class="form-control" id="signup_dob">
+            <label for="signup_dob"><i class="fa-solid fa-calendar-days"></i> Date of Birth</label>
           </div>
           <div class="form-floating mb-3">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <select class="form-select" id="signup_bg" aria-label="Floating label select example">
               <option value="A+">A+</option>
               <option value="A-">A-</option>
               <option value="AB+">AB+</option>
@@ -84,11 +88,11 @@
               <option value="O+">O+</option>
               <option value="O-">O-</option>
             </select>
-            <label for="floatingSelect"><i class="fa-solid fa-droplet"></i> Blood Group</label>
+            <label for="signup_bg"><i class="fa-solid fa-droplet"></i> Blood Group</label>
           </div>
 
           <div class="container-fluide mb-2" align="center">
-            <button type="button" class="btn btn-outline-danger btn-sm" style="min-width: 50%;">Register</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" style="min-width: 50%;" id="signupBTN">Register</button>
           </div>
         </div>       
       </div>
@@ -140,11 +144,11 @@
         </div>
         <div class="modal-body">
           <div class="form-floating mt-3 mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput"><i class="fa-solid fa-at"></i> Email address</label>
+            <input type="email" class="form-control" id="recover_email" placeholder="name@example.com">
+            <label for="recover_email"><i class="fa-solid fa-at"></i> Email address</label>
           </div>
           <div class="container-fluide" align="center">
-            <button type="button" class="btn btn-outline-info btn-sm" style="min-width: 50%;">Get Password</button>
+            <button type="button" class="btn btn-outline-info btn-sm" id="recoverBTN" style="min-width: 50%;">Get Password</button>
           </div>
         </div>
       </div>
