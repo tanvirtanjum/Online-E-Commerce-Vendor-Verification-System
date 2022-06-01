@@ -27,11 +27,11 @@
     <main class="container-fluide" style="min-height: 63vh;">
         <div class="container-fluid">
            <div class="pb-3" align="center">
-                <button type="button" class="btn btn-danger"><i class="fa-solid fa-circle-check"></i> ACCEPT ALL</button>
+                <button type="button" id="acceptAllBTN" class="btn btn-success"><i class="fa-solid fa-circle-check"></i> ACCEPT ALL</button>
            </div>
 
             <div class="table-responsive-sm">
-                <table class="table table-sm table-striped table-hover">
+                <table class="table table-sm table-striped table-hover" id="table">
                     <thead class="table-dark">
                         <th scope="col">#</th>
                         <th scope="col">NAME</th>
@@ -40,11 +40,83 @@
                         <th scope="col"></th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="5" align="center">NO DATA FOUND</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
+            </div>
+
+
+            <!--  Update Modal -->
+            <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">
+                            <i class="fa-solid fa-eye"></i>  Vendor Information
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-2" align="center">
+                            <img src="" class="img-fluid img-thumbnail rounded-circle mb-2" alt="..." id="avatar" height="200" width="200">
+                            <input type="hidden" id="update_id">
+                            <input type="hidden" id="update_login_id">
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="update_name" placeholder="XXX XXXX">
+                            <label for="update_name"><i class="fa-solid fa-user"></i> Name</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="email" class="form-control" id="update_email" placeholder="name@example.com" readonly>
+                            <label for="update_email"><i class="fa-solid fa-at"></i> Email address</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="number" class="form-control" id="update_contact" placeholder="name@example.com">
+                            <label for="update_contact"><i class="fa-solid fa-phone"></i> Mobile No. (+880-XXXXXXXXXX)</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="update_nid" placeholder="30XX67XXXX">
+                            <label for="update_nid"><i class="fa-solid fa-address-card"></i> National Identity No.</label>
+                        </div>
+                        <div class="mb-2 text-center" hidden>
+                            -OR-
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="update_passport" placeholder="30XX67XXXX">
+                            <label for="update_passport"><i class="fa-solid fa-passport"></i> Passport No.</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <select class="form-select" id="update_gender" aria-label="Floating label select example">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                            </select>
+                            <label for="update_gender"><i class="fa-solid fa-mars-and-venus"></i> Gender</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="date" class="form-control" id="update_dob">
+                            <label for="update_dob"><i class="fa-solid fa-calendar-days"></i> Date of Birth</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="update_bg" aria-label="Floating label select example">
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            </select>
+                            <label for="update_bg"><i class="fa-solid fa-droplet"></i> Blood Group</label>
+                        </div>
+                    </div>   
+                    <div class="modal-footer" id="render">
+                        <button type="button"  id="acceptBTN" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal">Accept</button>
+                        <button type="button" id="rejectBTN" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Reject</button>
+                    </div>    
+                </div>
+                </div>
             </div>
         </div>
     </main>

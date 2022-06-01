@@ -28,19 +28,23 @@
        <div class="container-fluid mb-lg-3" align="center">
         <div class="card" style="width: 90%;">
             <div align="center" style="padding-top: 3vh;">
-                <img src="../../assets/images/thumbnails/profile_avatar.png" class="img-fluid img-thumbnail rounded-circle mb-2" alt="..." id="avater" height="200" width="200">
+                <img src="" class="img-fluid img-thumbnail rounded-circle mb-2" alt="..." id="avatar" height="200" width="200">
                 <br>
-                <button type="button" class="btn btn-danger btn-sm">Update Photo</button>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#updateAvatarModal">Update Photo</button>
             </div>
-            <div class="container-fluid mt-2" align="cenetr">
-                <button type="button" class="btn btn-warning btn-sm">Update Password</button>
+            <div class="container-fluid mt-2" align="center">
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#changepassModal">Update Password</button>
             </div>
             <div class="card-body">
-              <h5 class="card-title" id="name">VENDOR NAME</h5>
+              <h5 class="card-title" id="name"></h5>
               <div align="left">
                   <div class="table-responsive-sm">
                     <table class="justify-content-start table-sm">
                         <tbody>
+                          <tr>
+                            <td><p class="card-text text-start">Employee No.:   </p></td>
+                            <td><span class="fw-bold" id="employee_no"></span></td>
+                          </tr>
                           <tr>
                               <td><p class="card-text text-start">Email:   </p></td>
                               <td><span class="fw-bold" id="email"></span></td>
@@ -59,15 +63,11 @@
                           </tr>
                           <tr>
                               <td><p class="card-text text-start">NID No.:   </p></td>
-                              <td><span class="fw-bold" id="rel"></span></td>
-                          </tr>
-                          <tr>
-                              <td><p class="card-text text-start">Passport No.:   </p></td>
-                              <td><span class="fw-bold" id="fname"></span></td>
+                              <td><span class="fw-bold" id="nid"></span></td>
                           </tr>
                           <tr>
                               <td><p class="card-text text-start">Date of Birth:   </p></td>
-                              <td><span class="fw-bold" id="mname"></span></td>
+                              <td><span class="fw-bold" id="dob"></span></td>
                           </tr>
                         </tbody>
                     </table>
@@ -76,6 +76,84 @@
             </div>
         </div>
        </div>
+
+
+       <!--  Change Password Modal -->
+       <div class="modal fade" id="changepassModal" tabindex="-1" aria-labelledby="changepassModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changepassModalLabel">
+                    <i class="fa-solid fa-gear fa-spin"></i>  Change Password
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid mb-2">
+                    <div class="alert alert-info" role="alert">
+                        <p><b>Password Requirements: </b></p>
+                        <p>
+                            &nbsp;&nbsp;1. Password should have at-least 6 characters.
+                            <br>
+                            &nbsp;&nbsp;2. New password should not be same as current one.
+                            <br>
+                            &nbsp;&nbsp;3. Don't give spaces on password. It will not be count.
+                        </p>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                        On successful operation, you have to login again.
+                    </div>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="password" class="form-control" id="cur_password" placeholder="XXXXXXX">
+                    <label for="cur_password"><i class="fa-solid fa-key"></i> Current Password</label>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="password" class="form-control" id="new_password" placeholder="XXXXXXX">
+                    <label for="new_password"><i class="fa-solid fa-key"></i> New password</label>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="password" class="form-control" id="con_password" placeholder="XXXXXXX">
+                    <label for="con_password"><i class="fa-solid fa-key"></i> Confirm New password</label>
+                </div>
+                
+                <div class="container-fluide mb-2" align="center">
+                    <button type="button" id="updatePassBTN" class="btn btn-outline-danger btn-sm" style="min-width: 50%;">Proceed</button>
+                </div>
+            
+            </div>       
+        </div>
+        </div>
+       </div>
+
+
+       <!-- Change Avatar Modal -->
+       <form id="uploadForm" enctype="multipart/form-data" method="post">
+        <div class="modal fade" id="updateAvatarModal" tabindex="-1" aria-labelledby="updateAvatarModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateAvatarModalLabel"><i class="fas fa-pen"></i>&nbsp;Update Image</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+    
+                        <div class="mb-2" style="width: calc(100%);" align="center">
+                            <input type="hidden" name="path" id="path">
+                            <img src="" class="img-fluid img-thumbnail rounded-circle" alt="NO DATA FOUND" id="update_avatar" height="200" width="200">
+                        </div>
+    
+                        <input class="form-control mb-2" type="file" id="uploaded_file" name="uploaded_file" accept="image/*">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="updateImageBTN" class="btn btn-success">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </form>
     </main>
 
     <footer id="footer"></footer>

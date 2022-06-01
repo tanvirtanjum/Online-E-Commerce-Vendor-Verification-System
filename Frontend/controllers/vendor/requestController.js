@@ -44,4 +44,30 @@ $(document).ready(function () {
     {
         checkLocalStorage();
     }
+
+    // LOAD PROFILE INFORMATION
+    var LoadMyProfile = function(){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/consumers/get-consumer/login_id/"+decryptLoginInfo.id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                   var data = xhr.responseJSON;
+                
+                   $('#my_user_id').val(data.id);
+                }
+                else {}
+            }
+        });
+    }
+
+    LoadMyProfile();
 });

@@ -32,11 +32,11 @@
                 <br>
                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#updateAvatarModal">Update Photo</button>
             </div>
-            <div class="container-fluid mt-2" align="cenetr">
+            <div class="container-fluid mt-2" align="center">
                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#changepassModal">Update Password</button>
             </div>
             <div class="card-body">
-              <h5 class="card-title" id="name">VENDOR NAME</h5>
+              <h5 class="card-title" id="name"></h5>
               <div align="left">
                   <div class="table-responsive-sm">
                     <table class="justify-content-start table-sm">
@@ -101,8 +101,8 @@
                     </div>
                 </div>
                 <div class="form-floating mb-2">
-                    <input type="password" class="form-control" id="cur_passowrd" placeholder="XXXXXXX">
-                    <label for="cur_passowrd"><i class="fa-solid fa-key"></i> Current Password</label>
+                    <input type="password" class="form-control" id="cur_password" placeholder="XXXXXXX">
+                    <label for="cur_password"><i class="fa-solid fa-key"></i> Current Password</label>
                 </div>
                 <div class="form-floating mb-2">
                     <input type="password" class="form-control" id="new_password" placeholder="XXXXXXX">
@@ -114,7 +114,7 @@
                 </div>
                 
                 <div class="container-fluide mb-2" align="center">
-                    <button type="button" class="btn btn-outline-danger btn-sm" style="min-width: 50%;">Proceed</button>
+                    <button type="button" id="updatePassBTN" class="btn btn-outline-danger btn-sm" style="min-width: 50%;">Proceed</button>
                 </div>
             
             </div>       

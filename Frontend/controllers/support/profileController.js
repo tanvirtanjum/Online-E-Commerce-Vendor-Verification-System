@@ -154,5 +154,100 @@ $(document).ready(function () {
 
 
     // UPDATE PASSWORD
-    
+    var validatePasswordChange = function() {
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var validate = true;
+        if($.trim($("#cur_password").val()).length <= 0 || $("#cur_password").val() != decryptLoginInfo.password)
+        {
+            validate = false;
+            $("#cur_password").addClass("is-invalid");
+        }
+        else
+        {
+            $("#cur_password").removeClass("is-invalid");
+        }
+        
+        if($.trim($("#new_password").val()).length <= 5)
+        {
+            validate = false;
+            $("#new_password").addClass("is-invalid");
+        }
+        else
+        {
+            $("#new_password").removeClass("is-invalid");
+        }
+
+        if($.trim($("#con_password").val()).length <= 5)
+        {
+            validate = false;
+            $("#con_password").addClass("is-invalid");
+        }
+        else
+        {
+            $("#con_password").removeClass("is-invalid");
+        }
+
+        if($("#new_password").val() != $("#con_password").val())
+        {
+            validate = false;
+            $("#con_password").addClass("is-invalid");
+        }
+        else
+        {
+            $("#con_password").removeClass("is-invalid");
+        }
+
+        return validate;
+    }
+
+    var updatePassword = function (data) {
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/logins/update-user-authentication-password/"+decryptLoginInfo.id,
+            method: "PUT",
+            data: data,
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        alert("Password Changed.\nLogin again.");
+                        localStorage.clear();
+                        window.location.href = base_URL+"/views/public/home.html";
+                    }
+                    else
+                    {
+                        alert("Something went wrong.\nTry again.");
+                    }
+                   
+                }
+                else {
+                    var data = xhr.responseJSON;
+                    alert("Something went wrong.\nTry again. 2");
+                }
+            }
+        });
+    }
+
+    $("#updatePassBTN").click(function () {
+        if(validatePasswordChange())
+        {
+            var data = {
+                password : $.trim($("#con_password").val()),
+            }
+            updatePassword(data);
+        }
+    });
+
 });

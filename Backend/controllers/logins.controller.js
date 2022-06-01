@@ -305,7 +305,6 @@ exports.sendUserPassword = (req, res, next) => {
 
 };
 
-
 exports.postRegistration = (req, res, next) => {
     var validated = true;
     const data = {
@@ -313,6 +312,86 @@ exports.postRegistration = (req, res, next) => {
         'password' : req.body.password,
         'role_id' : 3,
         'access_id' : 1,
+    };
+
+    if(validator.isEmpty(data.email , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(!validator.isEmail(data.email)) {
+        validated = false;
+    }
+
+    if(validator.isEmpty(data.password , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validated){
+        service.postRegistration(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+
+                // console.log(results);
+                return res.status(201).send(results);
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
+exports.postCustomer = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'email' : req.body.email,
+        'password' : req.body.password,
+        'role_id' : 3,
+        'access_id' : 3,
+    };
+
+    if(validator.isEmpty(data.email , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(!validator.isEmail(data.email)) {
+        validated = false;
+    }
+
+    if(validator.isEmpty(data.password , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validated){
+        service.postRegistration(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+
+                // console.log(results);
+                return res.status(201).send(results);
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
+exports.postPolice = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'email' : req.body.email,
+        'password' : req.body.password,
+        'role_id' : 2,
+        'access_id' : 3,
     };
 
     if(validator.isEmpty(data.email , {ignore_whitespace: true})) {
@@ -380,6 +459,104 @@ exports.updateUserImage = (req, res, next) => {
     }
     else{
         return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
+
+exports.updateUserPassword = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'id' : req.params.id,
+        'password' : req.body.password,
+    };
+    // Validation Code here
+    if(validator.isEmpty(data.password , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validated) {
+        service.updateUserPassword(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(200).send(results);
+            }
+        });
+    } else{
+        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
+    }
+
+};
+
+exports.updateUserAccess = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'id' : req.params.id,
+        'access_id' : req.body.access_id,
+    };
+    // Validation Code here
+    if(validator.isEmpty(data.access_id , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validated) {
+        service.updateUserAccess(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(200).send(results);
+            }
+        });
+    } else{
+        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
+    }
+
+};
+
+exports.acceptAllCustomer = (req, res, next) => {
+    var validated = true;
+    const data = {};
+    // Validation Code here
+    
+    if(validated) {
+        service.acceptAllCustomer(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(200).send(results);
+            }
+        });
+    } else{
+        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
+    }
+
+};
+
+exports.deleteUser = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'id' : req.params.id,
+    };
+    // Validation Code here
+
+    if(validated) {
+        service.deleteUser(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(204).send(results);
+            }
+        });
+    } else{
+        return res.status(400).send({ success: false, data: "Page Not Properly Validated." });
     }
 
 };

@@ -24,6 +24,12 @@ router.post("/get-user-authentication", controller.getUserLogin);
 router.post("/get-user-authentication-password", controller.getUserPassword);
 router.post("/send-user-authentication-password", controller.sendUserPassword);
 router.post("/insert-consumer-registration", controller.postRegistration);
+router.post("/insert-consumer", auth.authSupport, controller.postCustomer);
+router.post("/insert-police", auth.authSupport, controller.postPolice);
 router.put("/update-user-image/:id", auth.authSupport_Police_Vendor, upload.single('uploaded_file'), controller.updateUserImage);
+router.put("/update-user-authentication-password/:id", auth.authSupport_Police_Vendor, controller.updateUserPassword);
+router.put("/update-user-access/:id", auth.authSupport, controller.updateUserAccess);
+router.put("/update-all-customer-access/accept", auth.authSupport, controller.acceptAllCustomer);
+router.delete("/delete-user/:id", auth.authSupport, controller.deleteUser);
 
 module.exports = router;

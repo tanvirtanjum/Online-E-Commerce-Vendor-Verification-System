@@ -94,3 +94,59 @@ exports.updateUserImage = (data, callback) => {
         }
     );
 };
+
+exports.updateUserPassword = (data, callback) => {
+    db.query(
+        `UPDATE logins SET password = ?, updated_at = current_timestamp WHERE id = ?; `,
+        [data.password, data.id, data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
+
+exports.updateUserAccess = (data, callback) => {
+    db.query(
+        `UPDATE logins SET access_id = ?, updated_at = current_timestamp WHERE id = ?; `,
+        [data.access_id, data.id, data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
+
+exports.acceptAllCustomer = (data, callback) => {
+    db.query(
+        `UPDATE logins SET access_id = 3, updated_at = current_timestamp WHERE access_id = 1 AND role_id = 3 ; `,
+        [data.access_id, data.id, data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};
+
+exports.deleteUser = (data, callback) => {
+    db.query(
+        `DELETE FROM logins WHERE id = ?; `,
+        [data.id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, results);
+        }
+    );
+};

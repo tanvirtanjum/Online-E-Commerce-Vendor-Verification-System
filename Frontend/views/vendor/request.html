@@ -26,7 +26,7 @@
 
     <main class="container-fluide" style="min-height: 63vh;">
         <div class="container-fluid">
-
+            <input type="hidden" id="my_user_id">
             <div class="pb-3" align="center">
                 <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#signupModal">
                     <i class="fa-solid fa-plus-circle"></i>  ADD NEW VERIFICATION REQUEST
@@ -102,7 +102,7 @@
             </div>
             
             <div class="table-responsive-sm">
-                <table class="table table-sm table-striped table-hover">
+                <table class="table table-sm table-striped table-hover" id="table">
                     <thead class="table-dark">
                         <th scope="col">#</th>
                         <th scope="col">BUSINESS NAME</th>

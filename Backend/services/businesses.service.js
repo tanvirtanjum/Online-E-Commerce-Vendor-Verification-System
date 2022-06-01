@@ -12,3 +12,16 @@ exports.getAll = (data, callback) => {
         }
     );
 };
+
+exports.getAllByOwner = (data, callback) => {
+    db.query(
+        `SELECT * FROM businesses WHERE owner_id = ? ORDER BY id;`,
+        [data.owner_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};

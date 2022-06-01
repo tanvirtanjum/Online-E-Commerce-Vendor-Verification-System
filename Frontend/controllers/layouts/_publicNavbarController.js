@@ -208,7 +208,7 @@ $(document).ready(function () {
             $("#signup_email").removeClass("is-invalid");
         }
 
-        if($.trim($('#signup_contact').val()).length <= 9)
+        if($.trim($('#signup_contact').val()).length != 10)
         {
             validate = false;
             $('#signup_contact').addClass("is-invalid");
@@ -304,12 +304,21 @@ $(document).ready(function () {
                     var consumer_data = {
                         login_id: data.insertId,
                         name: $('#signup_name').val(), 
-                        nid_no: "" + $('#signup_nid').val(), 
-                        passport_no: "" + $('#signup_passport').val(), 
+                        nid_no: $('#signup_nid').val(), 
+                        passport_no: $('#signup_passport').val(), 
                         gender: $('#signup_gender').val(), 
                         dob: $('#signup_dob').val(), 
                         bg: $('#signup_bg').val(), 
                         contact_no: "+880" + $('#signup_contact').val(),
+                    }
+
+                    if($.trim($("#signup_nid").val()).length <= 0)
+                    {
+                        delete consumer_data.nid_no;
+                    }
+                    if($.trim($("#signup_passport").val()).length <= 0)
+                    {
+                        delete consumer_data.passport_no;
                     }
 
                     InsertConsumer(consumer_data);
