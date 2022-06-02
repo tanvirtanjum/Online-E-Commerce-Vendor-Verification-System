@@ -28,3 +28,16 @@ exports.getAllByOwner = (data, callback) => {
         }
     );
 };
+
+exports.postRegistration = (data, callback) => {
+    db.query(
+        `INSERT INTO businesses(credential, name, address, emergency_contact, verification_count, owner_id, type_id, verification_status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+        [data.credential, data.name, data.address, data.emergency_contact, data.verification_count, data.owner_id, data.type_id, data.verification_status_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};

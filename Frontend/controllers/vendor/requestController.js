@@ -44,6 +44,40 @@ $(document).ready(function () {
     {
         checkLocalStorage();
     }
+    // LOAD BUSINESS TYPE OPTIONS
+    var LoadAllBusinessTypeOptions = function(){
+        $.ajax({
+            url: api_base_URL+"/api/business_types/get-all",
+            method: "GET",
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += '<option value="'+data[i].id+'">'+data[i].type_name+'</option>';
+                        }
+                    }
+                    else
+                    {
+                        str += "";
+                    }
+
+                    $("#add_type").html(str);
+                }
+                else 
+                {
+                    str += "";
+                    $("#add_type").html(str);
+                }
+            }
+        });
+    }
+    LoadAllBusinessTypeOptions();
 
     // LOAD TABLE
     var LoadAllBusiness = function(id){
@@ -121,4 +155,86 @@ $(document).ready(function () {
     }
 
     LoadMyProfile();
+
+    // REGISTRATION
+    var validateRegistration= function() {
+        var validate = true;
+
+        if($.trim($('#add_name').val()).length <= 0)
+        {
+            validate = false;
+            $('#add_name').addClass("is-invalid");
+        }
+        else
+        {
+            $("#add_name").removeClass("is-invalid");
+        }
+
+        if($.trim($('#add_address').val()).length <= 0)
+        {
+            validate = false;
+            $('#add_address').addClass("is-invalid");
+        }
+        else
+        {
+            $("#add_address").removeClass("is-invalid");
+        }
+
+        if($.trim($('#add_contact').val()).length != 10)
+        {
+            validate = false;
+            $('#add_contact').addClass("is-invalid");
+        }
+        else
+        {
+            $("#add_contact").removeClass("is-invalid");
+        }
+
+
+        return validate;
+    }
+
+
+    var InsertBusiness = function(data){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/businesses/insert-business",
+            method: "POST",
+            data : data,
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    LoadMyProfile();
+                }
+                else 
+                {
+                    alert("This user already has an account.");
+                }
+            }
+        });
+    }
+
+    $("#addBTN").click(function () {
+        if(validateRegistration())
+        {
+            var data = {
+                name: $('#add_name').val(),
+                credential: "B" + Date.now(),
+                address: $('#add_address').val(),
+                emergency_contact: $('#add_contact').val(),
+                owner_id: $('#my_user_id').val(),
+                type_id: $('#add_type').val(),
+            }
+
+            InsertBusiness(data);
+        }
+    });
 });

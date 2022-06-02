@@ -7,5 +7,6 @@ var router = express.Router();
 
 router.get("/get-all", auth.authSupport, controller.getAll);
 router.get("/get-all/owner_id/:id", auth.authVendor, controller.getAllByOwner);
+router.post("/insert-business", auth.authVendor, controller.postRegistration);
 
 module.exports = router;

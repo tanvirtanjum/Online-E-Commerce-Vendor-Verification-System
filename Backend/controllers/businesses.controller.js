@@ -59,3 +59,41 @@ exports.getAllByOwner = (req, res, next) => {
     }
 
 };
+
+exports.postRegistration = (req, res, next) => {
+    var validated = true;
+    const data = {
+        'name' : req.body.name,
+        'credential' : req.body.credential,
+        'address' : req.body.address,
+        'emergency_contact' : req.body.emergency_contact,
+        'verification_count' : 0,
+        'owner_id' : req.body.owner_id,
+        'type_id' : req.body.type_id,
+        'verification_status_id' : 1,
+    };
+
+    if(validator.isEmpty(data.name , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validator.isEmpty(data.credential , {ignore_whitespace: true})) {
+        validated = false;
+    }
+
+    if(validated){
+        service.postRegistration(data, (error, results) => {
+            if (error) {
+                console.log(error);
+                return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });
+            }
+            else {
+                return res.status(201).send(results);
+            }
+        });
+    }
+    else{
+        return res.status(401).send({ success: false, data: "Unauthorized Request." })
+    }
+
+};
