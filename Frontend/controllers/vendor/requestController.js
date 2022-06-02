@@ -68,11 +68,13 @@ $(document).ready(function () {
                     }
 
                     $("#add_type").html(str);
+                    $("#view_type").html(str);
                 }
                 else 
                 {
                     str += "";
                     $("#add_type").html(str);
+                    $("#view_type").html(str);
                 }
             }
         });
@@ -229,7 +231,7 @@ $(document).ready(function () {
                 name: $('#add_name').val(),
                 credential: "B" + Date.now(),
                 address: $('#add_address').val(),
-                emergency_contact: $('#add_contact').val(),
+                emergency_contact: "+880"+$('#add_contact').val(),
                 owner_id: $('#my_user_id').val(),
                 type_id: $('#add_type').val(),
             }
@@ -261,9 +263,9 @@ $(document).ready(function () {
                         {
                             str += "<tr>"+
                                         "<th>"+ sl + "</th>"+
-                                        "<td>"+ data[i].path +"</td>"+
+                                        "<td>"+ data[i].path.slice(29) +"</td>"+
                                         "<td>"+ '<a class="btn btn-primary btn-sm" href="'+api_base_URL+'/api/download?path='+data[i].file_path+'" target="_blank" role="button" download><i class="fas fa-download"></i> Download</a>' +"</td>"+
-                                        "<td>"+ "<button type='button' data-bs-toggle='modal' data-bs-target='#deleteNoticeFileModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-danger'><i class='fas fa-trash-alt'></i> Delete</button>" +"</td>"+
+                                        "<td>"+ "<button type='button' data-bs-toggle='modal' data-bs-target='#deleteFileModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-danger'><i class='fas fa-trash-alt'></i> Delete</button>" +"</td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -302,14 +304,26 @@ $(document).ready(function () {
 
                    $('#business_id').val(data.id);
                    $('#view_credential').val(data.credential);
-                   $('#id').val(data.id);
+                   $('#view_name').val(data.name);
+                   $('#view_address').val(data.address);
+                   $('#view_contact').val(data.emergency_contact);
+                   $('#view_type').val(data.type_id);
+                   $('#view_status').val(data.status_name);
+
+                   if(data.verification_count == 1 && data.verification_status_id  == 4)
+                   {
+                        $("#reapplyBTN").attr('hidden', false);
+                   }
+                   else
+                   {
+                        $("#reapplyBTN").attr('hidden', true);
+                   }
 
                    LoadBusinessDocuments(id);
                 }
                 else 
                 {
-                    str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
-                    $("#noticeTable tbody").html(str);
+                    
                 }
             }
         });
@@ -319,4 +333,146 @@ $(document).ready(function () {
         var id = $(e.relatedTarget).data('bs-id');
         LoadBusiness(id);
     });
+
+    // ADD FILE
+    var addDocument = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var data = new FormData($('#uploadForm')[0]);
+
+        $.ajax({
+            url: api_base_URL+"/api/documents/insert-document/business/"+id,
+            method: "POST",
+            contentType: false,
+            processData: false,
+            cache: false,
+            data: data,
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 201) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        
+                    }
+                    else 
+                    {
+                        alert("Something went wrong.");
+                    }
+                }
+                else 
+                {
+                   alert("Something went wrong.");
+                }
+
+                LoadBusiness(id);
+             }
+        });
+    }
+
+    $("#uploadBTN").click(function () {
+        addDocument($('#business_id').val());
+    });
+
+    // LOAD DOCUMENT
+    var LoadDocumentByID = function LoadFileByID(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        var data;
+
+        $.ajax({
+            url: api_base_URL+"/api/documents/get-document/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    data = xhr.responseJSON;
+
+                    $('#fileid').val(data.id);
+                    $('#filepath').val(data.path.toString());
+                    $('#filename').html(data.path.slice(29));
+                }
+            }
+        });
+    }
+
+    $('#deleteFileModal').on('show.bs.modal', function(e) {
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadDocumentByID(id);
+    });
+
+
+    // DELETE DOCUMENT
+    var DeleteFileByID = function(id, path){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/documents/delete-document/id/"+id,
+            method: "DELETE",
+            headers : {
+                role : decryptLoginInfo.role_id,
+                path: path,
+            },
+            complete: function (xhr, status) {
+                LoadBusiness($('#business_id').val());
+            }
+        });
+    }
+
+    $("#deletefileBTN").click(function () {
+        DeleteFileByID($('#fileid').val(), $('#filepath').val());
+    });
+
+    // REAPPLY
+    var reApply = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/businesses/reapply/"+id,
+            method: "PUT",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    if(data.affectedRows >= 1)
+                    {
+                        
+                    }
+                    else 
+                    {
+                        alert("Something went wrong.");
+                    }
+                }
+                else 
+                {
+                   alert("Something went wrong.");
+                }
+
+                LoadBusiness(id);
+                
+                // LoadBusiness();
+            }
+        });
+    }
+
+    $("#reapplyBTN").click(function () {
+        reApply($('#business_id').val());
+    });
+    
 });

@@ -113,7 +113,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" id="business_id">
+                        <input type="hidden" id="business_id">
                         <div class="form-floating mb-2">
                             <input type="text" class="form-control" id="view_credential" placeholder="XXX XXXX" readonly>
                             <label for="view_credential"><i class="fa-solid fa-hashtag"></i> Credentials</label>
@@ -125,10 +125,10 @@
                     </div>
                     <div class="form-floating mb-2">
                         <textarea class="form-control" id="view_address" placeholder="name@example.com" readonly></textarea>
-                        <label for="add_address"><i class="fa-solid fa-at"></i> Business address</label>
+                        <label for="view_address"><i class="fa-solid fa-at"></i> Business address</label>
                     </div>
                     <div class="form-floating mb-2">
-                        <input type="number" class="form-control" id="view_contact" placeholder="name@example.com" readonly>
+                        <input type="text" class="form-control" id="view_contact" placeholder="name@example.com" readonly>
                         <label for="view_contact"><i class="fa-solid fa-phone"></i> Emergency contact. (+880-XXXXXXXXXX)</label>
                     </div>
                     <div class="form-floating mb-2">
@@ -137,6 +137,14 @@
                         </select>
                         <label for="view_type"><i class="fa-solid fa-mars-and-venus"></i> Business type</label>
                     </div>
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="view_status" placeholder="XXX XXXX" readonly>
+                        <label for="view_status"><i class="fa-solid fa-user"></i> Verification status</label>
+                    </div>
+                    <div class="mb-2" align="center">
+                        <button class="btn btn-info" id="reapplyBTN">Reapply</button>
+                    </div>
+
                         <div class="alert alert-success mb-2" role="alert">
                             <b>!!INFORMATION</b><br>
                             Add file one by one.                           
@@ -144,7 +152,7 @@
                     <form id="uploadForm" enctype="multipart/form-data" method="post">
                         <input class="form-control mb-2" type="file" id="uploaded_file" name="uploaded_file">
                         <div class="container-fluide mb-2" align="center">
-                            <button type="button" class="btn btn-outline-danger btn-sm" style="min-width: 50%;" id="uploadBTN" data-bs-dismiss="modal">Upload File</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm" style="min-width: 50%;" id="uploadBTN">Upload File</button>
                         </div>
                     </form>
                     <div class="table-responsive" align="center">
@@ -166,6 +174,30 @@
                     </div>
                     </div>       
                 </div>
+                </div>
+            </div>
+
+            <!-- Delete File Modal -->
+            <div class="modal fade" id="deleteFileModal" tabindex="-1" aria-labelledby="deleteFileModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="fileid">
+                            <input type="hidden" id="filepath">
+                            <div class="form-floating mb-2" align="center">
+                                <div class="alert alert-warning" role="alert">
+                                    <i class="fas fa-question-circle"></i> Are you sure you want to delete?
+                                    <p id="filename"></p>
+                                </div>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id="deletefileBTN" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-trash-alt"></i> Confirm</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

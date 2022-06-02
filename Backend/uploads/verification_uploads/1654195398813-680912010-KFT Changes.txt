@@ -1,0 +1,17 @@
+1. Home Page --> Prospectus
+2. Gallary
+	a. PIC (MULTIPLE PIC)
+	b. CAPTION
+	c. Date (Picker)
+3. Result system change.
+	a. Group Wise excel (Result Controller) (Class, Version, Subject Group, Class Group
+	b. 
+4. 
+
+System:
+	a. Admin
+	b. Timeline Moderator
+	c. Result Moderator
+	d. Teacher
+	e. Student
+	
