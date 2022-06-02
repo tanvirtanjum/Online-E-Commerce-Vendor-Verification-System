@@ -474,5 +474,68 @@ $(document).ready(function () {
     $("#reapplyBTN").click(function () {
         reApply($('#business_id').val());
     });
+
+
+    // SEARCH
+    // LOAD TABLE
+    var LoadAllBusinessByKey = function(id, key){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/businesses/get-all/owner_id/"+id+"/key/"+key,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0)
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].name +"</td>"+
+                                        "<td>"+ data[i].type_name +"</td>"+
+                                        "<td>"+ data[i].credential  +"</td>"+
+                                        "<td>"+ data[i].status_name  +"</td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#viewModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-eye'></i> View</button></td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                    $("#table tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='6' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#table tbody").html(str);
+                }
+            }
+        });
+    }
+
+    $("#search").on("keyup change",function(){
+        if($.trim($("#search").val()).length > 0)
+        {
+            LoadAllBusinessByKey($('#my_user_id').val(), $("#search").val());
+        }
+        else
+        {
+            LoadAllBusiness($('#my_user_id').val());
+        }
+    });
     
 });

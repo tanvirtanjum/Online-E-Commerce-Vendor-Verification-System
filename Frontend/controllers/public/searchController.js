@@ -24,12 +24,31 @@ $(document).ready(function () {
                    
 
                     $('#typer').html(str);
+                    
+                    if(data.verification_status_id == 1)
+                    {
+                        $('#logo').html('<span class="text-warning"><i class="fa-solid fa-certificate fa-4x fa-fade"></i></span>');
+                    }
+                    else if(data.verification_status_id == 2)
+                    {
+                        $('#logo').html('<span class="text-info"><i class="fa-solid fa-certificate fa-4x fa-fade"></i></span>');
+                    }
+                    else if(data.verification_status_id == 3)
+                    {
+                        $('#logo').html('<span class="text-success"><i class="fa-solid fa-certificate fa-4x fa-fade"></i></span>');
+                    }
+                    else if(data.verification_status_id == 4)
+                    {
+                        $('#logo').html('<span class="text-danger"><i class="fa-solid fa-certificate fa-4x fa-fade"></i></span>');
+                    }
+                    else{}
                 }
                 else 
                 {
                     str += "<p class='h4'>Invalid Credential<br>Try Again.</p>";
 
                     $('#typer').html(str);
+                    $('#logo').html('<span class="text-danger"></i><i class="fa-solid fa-triangle-exclamation fa-4x fa-fade"></i></span>');
                 }
 
                 $('#viewModal').modal('show');

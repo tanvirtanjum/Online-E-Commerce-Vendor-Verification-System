@@ -29,6 +29,22 @@ exports.getAllByOwner = (data, callback) => {
     );
 };
 
+exports.getAllByOwnerAndKey = (data, callback) => {
+    db.query(
+        `SELECT businesses.*, business_types.type_name, verification_status.status_name FROM businesses `+
+        `INNER JOIN business_types ON businesses.type_id = business_types.id `+
+        `INNER JOIN verification_status ON businesses.verification_status_id = verification_status.id `+
+        `WHERE (businesses.name LIKE ? OR businesses.credential LIKE ?) AND businesses.owner_id = ? ORDER BY businesses.id; `,
+        [data.key, data.key, data.owner_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.getAllByID = (data, callback) => {
     db.query(
         `SELECT businesses.*, business_types.type_name, verification_status.status_name FROM businesses `+
