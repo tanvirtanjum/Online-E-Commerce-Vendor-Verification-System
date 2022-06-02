@@ -1,6 +1,7 @@
 // Importing System Library Modules
 const validator = require('validator');
 const nodemailer = require('nodemailer');
+var fs = require('fs');
 
 // Importing Created Modules
 const service = require("../services/logins.service");
@@ -444,7 +445,7 @@ exports.updateUserImage = (req, res, next) => {
             }
             else {
                 try {
-                    if(req.header("path") != "uploads/avatar/profile_avatar.png")
+                    if(req.header("path") != "uploads\\avatar\\profile_avatar.png")
                     {
                         fs.unlinkSync(req.header("path"))
                         //file removed

@@ -18,8 +18,24 @@ exports.getAllByOwner = (data, callback) => {
         `SELECT businesses.*, business_types.type_name, verification_status.status_name FROM businesses `+
         `INNER JOIN business_types ON businesses.type_id = business_types.id `+
         `INNER JOIN verification_status ON businesses.verification_status_id = verification_status.id `+
-        `WHERE owner_id = ? ORDER BY id;`,
+        `WHERE businesses.owner_id = ? ORDER BY businesses.id;`,
         [data.owner_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
+exports.getAllByID = (data, callback) => {
+    db.query(
+        `SELECT businesses.*, business_types.type_name, verification_status.status_name FROM businesses `+
+        `INNER JOIN business_types ON businesses.type_id = business_types.id `+
+        `INNER JOIN verification_status ON businesses.verification_status_id = verification_status.id `+
+        `WHERE businesses.id = ?;`,
+        [data.id],
         (error, results, fields) => {
             if (error) {
                 return callback(error);

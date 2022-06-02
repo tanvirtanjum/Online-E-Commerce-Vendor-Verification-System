@@ -108,7 +108,7 @@ $(document).ready(function () {
                                         "<td>"+ data[i].type_name +"</td>"+
                                         "<td>"+ data[i].credential  +"</td>"+
                                         "<td>"+ data[i].status_name  +"</td>"+
-                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#updateModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i> Edit</button></td>"+
+                                        "<td>"+"<button type='button' data-bs-toggle='modal' data-bs-target='#viewModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-primary'><i class='fas fa-eye'></i> View</button></td>"+
                                 "</tr>";
                             sl++;
                         }
@@ -236,5 +236,87 @@ $(document).ready(function () {
 
             InsertBusiness(data);
         }
+    });
+
+    // LOAD BUSINESS
+    var LoadBusinessDocuments = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/documents/get-all/business/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    var data = xhr.responseJSON;
+                    var str = '';
+                    var sl = 1;
+                    if(data.length > 0 && data[0].file_path != '')
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            str += "<tr>"+
+                                        "<th>"+ sl + "</th>"+
+                                        "<td>"+ data[i].path +"</td>"+
+                                        "<td>"+ '<a class="btn btn-primary btn-sm" href="'+api_base_URL+'/api/download?path='+data[i].file_path+'" target="_blank" role="button" download><i class="fas fa-download"></i> Download</a>' +"</td>"+
+                                        "<td>"+ "<button type='button' data-bs-toggle='modal' data-bs-target='#deleteNoticeFileModal' data-bs-id='"+data[i].id+"' class='btn btn-sm btn-danger'><i class='fas fa-trash-alt'></i> Delete</button>" +"</td>"+
+                                "</tr>";
+                            sl++;
+                        }
+                    }
+                    else
+                    {
+                        str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                    }
+
+                   $("#file_table tbody").html(str);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='4' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#file_table tbody").html(str);
+                }
+            }
+        });
+    }
+
+    var LoadBusiness = function(id){
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/businesses/get-business/"+id,
+            method: "GET",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+            complete: function (xhr, status) {
+                if (xhr.status == 200) {
+                    
+                    var data = xhr.responseJSON;
+
+                   $('#business_id').val(data.id);
+                   $('#view_credential').val(data.credential);
+                   $('#id').val(data.id);
+
+                   LoadBusinessDocuments(id);
+                }
+                else 
+                {
+                    str += "<tr><td colspan='5' align='middle'>NO DATA FOUND</td></tr>";
+                    $("#noticeTable tbody").html(str);
+                }
+            }
+        });
+    }
+
+    $('#viewModal').on('show.bs.modal', function(e) {
+        var id = $(e.relatedTarget).data('bs-id');
+        LoadBusiness(id);
     });
 });

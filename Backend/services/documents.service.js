@@ -12,3 +12,16 @@ exports.getAll = (data, callback) => {
         }
     );
 };
+
+exports.getAllByBusinessID = (data, callback) => {
+    db.query(
+        `SELECT * FROM documents WHERE business_id = ? ORDER BY id;`,
+        [data.business_id],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};

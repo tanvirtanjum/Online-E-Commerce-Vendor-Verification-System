@@ -18,7 +18,7 @@ var express = require("express");
 
 var router = express.Router();
 
-router.get("/get-all", controller.getAll);
+router.get("/get-all", auth.authSupport, controller.getAll);
 router.get("/get-user/id/:id", auth.authSupport_Police_Vendor, controller.getUserByID);
 router.post("/get-user-authentication", controller.getUserLogin);
 router.post("/get-user-authentication-password", controller.getUserPassword);

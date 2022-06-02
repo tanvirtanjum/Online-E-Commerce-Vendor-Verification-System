@@ -101,6 +101,73 @@
                     </tbody>
                 </table>
             </div>
+
+            <!--  Add Modal -->
+            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="viewModalLabel">
+                        <i class="fa-solid fa-info"></i>  Business Information
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="business_id">
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="view_credential" placeholder="XXX XXXX" readonly>
+                            <label for="view_credential"><i class="fa-solid fa-hashtag"></i> Credentials</label>
+                        </div>
+                       
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="view_name" placeholder="XXX XXXX" readonly>
+                        <label for="view_name"><i class="fa-solid fa-user"></i> Business name</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" id="view_address" placeholder="name@example.com" readonly></textarea>
+                        <label for="add_address"><i class="fa-solid fa-at"></i> Business address</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" id="view_contact" placeholder="name@example.com" readonly>
+                        <label for="view_contact"><i class="fa-solid fa-phone"></i> Emergency contact. (+880-XXXXXXXXXX)</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="view_type" aria-label="Floating label select example" disabled>
+                        
+                        </select>
+                        <label for="view_type"><i class="fa-solid fa-mars-and-venus"></i> Business type</label>
+                    </div>
+                        <div class="alert alert-success mb-2" role="alert">
+                            <b>!!INFORMATION</b><br>
+                            Add file one by one.                           
+                        </div>
+                    <form id="uploadForm" enctype="multipart/form-data" method="post">
+                        <input class="form-control mb-2" type="file" id="uploaded_file" name="uploaded_file">
+                        <div class="container-fluide mb-2" align="center">
+                            <button type="button" class="btn btn-outline-danger btn-sm" style="min-width: 50%;" id="uploadBTN" data-bs-dismiss="modal">Upload File</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive" align="center">
+                        <p class="h4">Attachments</p>
+                        <hr>
+                        <table class="table table-borderless table-responsive-sm table-hover" id="file_table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" align="center">File Name</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                         </table>
+                    </div>
+                    </div>       
+                </div>
+                </div>
+            </div>
         </div>
     </main>
 
