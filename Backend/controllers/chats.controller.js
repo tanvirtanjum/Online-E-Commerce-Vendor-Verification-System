@@ -4,12 +4,12 @@ const validator = require('validator');
 // Importing Created Modules
 const service = require("../services/chats.service");
 
-exports.getAll = (req, res, next) => {
+exports.getAllPending = (req, res, next) => {
     var validated = true;
     const data = {};
 
     if(validated){
-        service.getAll(data, (error, results) => {
+        service.getAllPending(data, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(400).send({ success: false, data: "Bad Request. {{--> "+error+" <--}}" });

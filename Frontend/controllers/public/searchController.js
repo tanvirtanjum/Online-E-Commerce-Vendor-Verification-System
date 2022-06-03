@@ -5,9 +5,9 @@ $(document).ready(function () {
 
     // LOAD BUSINESS
     var LoadBusiness = function(credential){
-        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
-        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
-        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+        // var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        // decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        // decryptLoginInfo = JSON.parse(decryptLoginInfo);
 
         var str = "";
         $.ajax({
