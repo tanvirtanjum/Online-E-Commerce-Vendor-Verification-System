@@ -30,6 +30,6 @@ router.put("/update-user-image/:id", auth.authSupport_Police_Vendor, upload.sing
 router.put("/update-user-authentication-password/:id", auth.authSupport_Police_Vendor, controller.updateUserPassword);
 router.put("/update-user-access/:id", auth.authSupport, controller.updateUserAccess);
 router.put("/update-all-customer-access/accept", auth.authSupport, controller.acceptAllCustomer);
-router.delete("/delete-user/:id", auth.authSupport, controller.deleteUser);
+router.delete("/delete-user/:id", controller.deleteUser);
 
 module.exports = router;

@@ -26,28 +26,140 @@
 
     <main class="container-fluide" style="min-height: 63vh;">
         <div class="container-fluid">
-
             <div class="input-group input-group-sm pb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Search Business by Name or Credential No.">
+                <input type="text" id="search" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Search Business By Name or Credential.">
             </div>
 
-
+            <select class="form-select mb-3" aria-label="Filter" id="filter">
+                
+            </select>
+            
             <div class="table-responsive-sm">
-                <table class="table table-sm table-striped table-hover">
+                <table class="table table-sm table-striped table-hover" id="table">
                     <thead class="table-dark">
                         <th scope="col">#</th>
+                        <th scope="col">NAME</th>
                         <th scope="col">BUSINESS NAME</th>
+                        <th scope="col">BUSINESS TYPE</th>
                         <th scope="col">CREDENTIAL</th>
-                        <th scope="col">STATUS</th>
+                        <th scope="col">CURRENT STATUS</th>
                         <th scope="col"></th>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="5" align="center">NO DATA FOUND</td>
+                            
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!--  Add Modal -->
+            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="viewModalLabel">
+                        <i class="fa-solid fa-info"></i>  Information
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="h4">Businessman Information</p><hr>
+                        <div align="center">
+                            <img src="" class="img-fluid img-thumbnail rounded-circle mb-2" alt="..." id="avatar" height="150" width="150">
+                            <p class = "h5" id="b_name"></p>
+                            <p class = "h6" id="b_email"></p>
+                            <p class = "h6" id="b_contact"></p>
+                        </div>
+
+                        <p class="h4">Business Information</p><hr>
+                        <input type="hidden" id="business_id">
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="view_credential" placeholder="XXX XXXX" readonly>
+                            <label for="view_credential"><i class="fa-solid fa-hashtag"></i> Credentials</label>
+                        </div>
+                       
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="view_name" placeholder="XXX XXXX" readonly>
+                        <label for="view_name"><i class="fa-solid fa-user"></i> Business name</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <textarea class="form-control" id="view_address" placeholder="name@example.com" readonly></textarea>
+                        <label for="view_address"><i class="fa-solid fa-at"></i> Business address</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="view_contact" placeholder="name@example.com" readonly>
+                        <label for="view_contact"><i class="fa-solid fa-phone"></i> Emergency contact. (+880-XXXXXXXXXX)</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <select class="form-select" id="view_type" aria-label="Floating label select example" disabled>
+                        
+                        </select>
+                        <label for="view_type"><i class="fa-solid fa-mars-and-venus"></i> Business type</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="view_status" placeholder="XXX XXXX" readonly>
+                        <label for="view_status"><i class="fa-solid fa-user"></i> Verification status</label>
+                    </div>
+            
+                    <div class="container alert-info pt-4 mt-4 mb-4 rounded-pill" id="section" align="center">
+                        <p class="h4 text-lg-center">Assign Police</p>
+                        <hr>
+                        <div class="form-floating mb-2 mt-2">
+                            <select class="form-select" id="view_police" aria-label="Floating label select example">
+                            
+                            </select>
+                            <label for="view_police"><i class="fa-solid fa-person-military-to-person"></i> Police</label>
+                        </div>
+                        <button class="btn btn-success mb-2" id="assignBTN">ASSIGN</button>
+                        <hr>
+                    </div>
+                        
+                    <div class="table-responsive" align="center">
+                        <p class="h4">Attachments</p>
+                        <hr>
+                        <table class="table table-borderless table-responsive-sm table-hover" id="file_table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" align="center">File Name</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                         </table>
+                    </div>
+                    </div>       
+                </div>
+                </div>
+            </div>
+
+            <!-- Delete File Modal -->
+            <div class="modal fade" id="deleteFileModal" tabindex="-1" aria-labelledby="deleteFileModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="fileid">
+                            <input type="hidden" id="filepath">
+                            <div class="form-floating mb-2" align="center">
+                                <div class="alert alert-warning" role="alert">
+                                    <i class="fas fa-question-circle"></i> Are you sure you want to delete?
+                                    <p id="filename"></p>
+                                </div>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id="deletefileBTN" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-trash-alt"></i> Confirm</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

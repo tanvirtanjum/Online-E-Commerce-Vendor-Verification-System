@@ -15,6 +15,21 @@ exports.getAll = (data, callback) => {
     );
 };
 
+exports.getAllActive = (data, callback) => {
+    db.query(
+        `SELECT polices.*, logins.email, logins.access_id, logins.img_path FROM polices `+
+        `INNER JOIN logins ON polices.login_id = logins.id `+
+        `WHERE logins.access_id = 3;`,
+        [],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error);
+            }
+            return callback(null, results);
+        }
+    );
+};
+
 exports.getUserByLoginID = (data, callback) => {
     db.query(
         `SELECT polices.*, logins.email, logins.img_path FROM polices `+

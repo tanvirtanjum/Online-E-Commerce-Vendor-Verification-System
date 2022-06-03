@@ -465,6 +465,7 @@ $(document).ready(function () {
                 }
 
                 LoadBusiness(id);
+                LoadMyProfile();
                 
                 // LoadBusiness();
             }

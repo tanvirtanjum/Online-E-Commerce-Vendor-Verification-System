@@ -171,6 +171,31 @@ $(document).ready(function () {
         });
     }
 
+    var deleteLogin = function (id) {
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/logins/delete-user/"+id,
+            method: "DELETE",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+
+            complete: function (xhr, status) {
+                if (xhr.status == 204) {
+                    var data = xhr.responseJSON;
+                    LoadAllVendor();                 
+                }
+                else {
+                    var data = xhr.responseJSON;
+                    alert("Something went wrong.\nTry again.");
+                }
+            }
+        });
+    }
+
     var InsertConsumer = function(consumer_data){
         $.ajax({
             url: api_base_URL+"/api/consumers/insert-consumer-registration",
@@ -193,11 +218,13 @@ $(document).ready(function () {
                     }
                     else 
                     {
+                        deleteLogin(consumer_data.login_id);
                         alert("Something Went Wrong.\nTry Again.");
                     }
                 }
                 else 
                 {
+                    deleteLogin(consumer_data.login_id);
                     alert("Something Went Wrong.\nTry Again.");
                 }
             }

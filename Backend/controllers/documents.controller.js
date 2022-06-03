@@ -1,5 +1,6 @@
 // Importing System Library Modules
 const validator = require('validator');
+var fs = require('fs');
 
 // Importing Created Modules
 const service = require("../services/documents.service");

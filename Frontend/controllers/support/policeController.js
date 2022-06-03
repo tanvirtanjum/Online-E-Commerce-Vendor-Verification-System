@@ -172,6 +172,31 @@ $(document).ready(function () {
         });
     }
 
+    var deleteLogin = function (id) {
+        var decryptLoginInfo = CryptoJS.AES.decrypt(localStorage.loginInfo, '333');
+        decryptLoginInfo = decryptLoginInfo.toString(CryptoJS.enc.Utf8);
+        decryptLoginInfo = JSON.parse(decryptLoginInfo);
+
+        $.ajax({
+            url: api_base_URL+"/api/logins/delete-user/"+id,
+            method: "DELETE",
+            headers : {
+                role : decryptLoginInfo.role_id,
+            },
+
+            complete: function (xhr, status) {
+                if (xhr.status == 204) {
+                    var data = xhr.responseJSON;
+                    LoadAllPolice();                 
+                }
+                else {
+                    var data = xhr.responseJSON;
+                    alert("Something went wrong.\nTry again.");
+                }
+            }
+        });
+    }
+
     var InsertPolice = function(police_data){
         $.ajax({
             url: api_base_URL+"/api/polices/insert-police-registration",
@@ -194,11 +219,13 @@ $(document).ready(function () {
                     }
                     else 
                     {
+                        deleteLogin(police_data.login_id);
                         alert("Something Went Wrong.\nTry Again.");
                     }
                 }
                 else 
                 {
+                    deleteLogin(police_data.login_id);
                     alert("Something Went Wrong.\nTry Again.");
                 }
             }
